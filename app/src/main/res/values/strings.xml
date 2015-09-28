@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">TorgMan</string>
+
+    <string name="login">Вхід</string>
+    <string name="action_settings">Settings</string>
+    <string name="orders">Закази</string>
+    <string name="contractor">Контрагенти</string>
+    <string name="info">Інфо</string>
+    <string name="exit">Вихід</string>
+    <string name="btnOk">OK</string>
+    <string name="exchange">Обмін з Сервером</string>
+    <string name="tvexch">Виконати обмін з сайтом</string>
+    <string name="btnExchOp">Налаштування обмніну</string>
+    <string name="tvEx">Оновлення не виконувалось</string>
+</resources>
