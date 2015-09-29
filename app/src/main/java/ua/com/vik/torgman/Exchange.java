@@ -1,4 +1,4 @@
-/*package ua.com.vik.torgman;
+package ua.com.vik.torgman;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.Request.Method;
@@ -20,18 +19,16 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import ua.com.vik.torgman.R;
-import ua.com.vik.torgman.AppConfig;
-import ua.com.vik.torgman.AppController;
 import helper.SQLiteHandler;
 import helper.SessionManager;
 
 public class Exchange extends Activity {
-    private static final String TAG = RegisterActivity.class.getSimpleName();
-    private Button btnLogin;
-    private Button btnLinkToRegister;
-    private EditText inputEmail;
-    private EditText inputPassword;
+
+    private static final String TAG = Exchange.class.getSimpleName();
+    private Button btnExch;
+  //  private Button btnLinkToRegister;
+   // private EditText inputEmail;
+   // private EditText inputPassword;
     private ProgressDialog pDialog;
     private SessionManager session;
     private SQLiteHandler db;
@@ -39,12 +36,12 @@ public class Exchange extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.exchange);
 
-        inputEmail = (EditText) findViewById(R.id.email);
-        inputPassword = (EditText) findViewById(R.id.password);
-        btnLogin = (Button) findViewById(R.id.btnLogin);
-        btnLinkToRegister = (Button) findViewById(R.id.btnLinkToRegisterScreen);
+      //  inputEmail = (EditText) findViewById(R.id.email);
+      //  inputPassword = (EditText) findViewById(R.id.password);
+        btnExch = (Button) findViewById(R.id.btnExch);
+       // btnLinkToRegister = (Button) findViewById(R.id.btnLinkToRegisterScreen);
 
         // Progress dialog
         pDialog = new ProgressDialog(this);
@@ -57,55 +54,31 @@ public class Exchange extends Activity {
         session = new SessionManager(getApplicationContext());
 
         // Check if user is already logged in or not
-        if (session.isLoggedIn()) {
+    /*    if (session.isLoggedIn()) {
             // User is already logged in. Take him to main activity
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
-        }
+        }*/
 
         // Login button Click Event
-        btnLogin.setOnClickListener(new View.OnClickListener() {
+        btnExch.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
-                String email = inputEmail.getText().toString().trim();
-                String password = inputPassword.getText().toString().trim();
-
-                // Check for empty data in the form
-                if (!email.isEmpty() && !password.isEmpty()) {
-                    // login user
-                    checkLogin(email, password);
-                } else {
-                    // Prompt user to enter credentials
-                    Toast.makeText(getApplicationContext(),
-                            "Please enter the credentials!", Toast.LENGTH_LONG)
-                            .show();
-                }
+                    checkLogin();
             }
 
         });
-
-        // Link to Register Screen
-        btnLinkToRegister.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(),
-                        RegisterActivity.class);
-                startActivity(i);
-                finish();
-            }
-        });
-
     }
 
     /**
      * function to verify login details in mysql db
-     *
-    private void checkLogin(final String email, final String password) {
+     */
+    private void checkLogin() {
         // Tag used to cancel the request
         String tag_string_req = "req_login";
 
-        pDialog.setMessage("Logging in ...");
+        pDialog.setMessage("Зачекайте, виконується обмін");
         showDialog();
 
         StringRequest strReq = new StringRequest(Method.POST,
@@ -130,16 +103,14 @@ public class Exchange extends Activity {
                         String uid = jObj.getString("uid");
 
                         JSONObject user = jObj.getJSONObject("user");
-                        String name = user.getString("name");
-                        String email = user.getString("email");
-                        String created_at = user
-                                .getString("created_at");
+                        String uname = user.getString("uname");
+                        String upass = user.getString("upass");
 
                         // Inserting row in users table
-                        db.addUser(name, email, uid, created_at);
+                        db.addUser(uname, upass, uid);
 
                         // Launch main activity
-                        Intent intent = new Intent(LoginActivity.this,
+                        Intent intent = new Intent(Exchange.this,
                                 MainActivity.class);
                         startActivity(intent);
                         finish();
@@ -171,8 +142,8 @@ public class Exchange extends Activity {
             protected Map<String, String> getParams() {
                 // Posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("email", email);
-                params.put("password", password);
+            //    params.put("uname", uname);
+             //   params.put("upass", upass);
 
                 return params;
             }
@@ -192,4 +163,4 @@ public class Exchange extends Activity {
         if (pDialog.isShowing())
             pDialog.dismiss();
     }
-}*/
+}
