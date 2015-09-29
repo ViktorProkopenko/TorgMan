@@ -18,24 +18,19 @@ import java.util.List;
 
 public class Login extends Activity {
     final String LOG_TAG = "myLogs";
-    DataBase dbHelper;
+    DataBase DBHelper;
     Cursor cursor;
     EditText etPass;
     Spinner spinner;
-    String name[] = {"Китай", "США", "Бразилия", "Россия", "Япония",
-            "Германия", "Египет", "Италия", "Франция", "Канада"};
-    String region[] = {"123", "124", "125", "126", "127",
-            "128", "129", "321", "322", "333"};
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
         spinner = (Spinner) findViewById(R.id.spinner);
         etPass = (EditText) findViewById(R.id.etPass);
-        dbHelper = new DataBase(this);
-        dbHelper.open();
-        cursor = dbHelper.getAllData();
+        DBHelper = new DataBase(this);
+        DBHelper.open();
+        cursor = DBHelper.getAllData();
         List<String> labels = new ArrayList<>();
         if (cursor.moveToFirst()) {
             do {
@@ -47,12 +42,12 @@ public class Login extends Activity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         cursor.close();
-        dbHelper.close();
+        DBHelper.close();
     }
 
     public void LoginOk(View view) {
-        dbHelper.open();
-        cursor = dbHelper.getAllData();
+        DBHelper.open();
+        cursor = DBHelper.getAllData();
         if (cursor.moveToFirst()) {
             do {
                 if ((spinner.getSelectedItem().toString().equals(cursor.getString(1)))
@@ -62,14 +57,14 @@ public class Login extends Activity {
                     intent.putExtra("name", spinner.getSelectedItem().toString());
                     setResult(RESULT_OK, intent);
                     cursor.close();
-                    dbHelper.close();
+                    DBHelper.close();
                     finish();
                 }
             } while (cursor.moveToNext());
         }
         noPass();
         cursor.close();
-        dbHelper.close();
+        DBHelper.close();
     }
 
     private void noPass() {

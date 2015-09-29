@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.view.View;
 
 public class DataBase {
 
@@ -52,14 +51,12 @@ public class DataBase {
     }
 
     // добавить запись в DB_TABLE
-    public void addRec(String[] name, String[] region) {
+    public void addRec(String uname, String upass) {
         ContentValues cv = new ContentValues();
-        for (int i=0; i<10;i++) {
-            cv.put(COLUMN_NAME, name[i]);
-            cv.put(COLUMN_PASS, region[i]);
+            cv.put(COLUMN_NAME, uname);
+            cv.put(COLUMN_PASS, upass);
             mDB.insert(DB_TABLE, null, cv);
         }
-    }
 
     // удалить запись из DB_TABLE
     public void delRec(long id) {

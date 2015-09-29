@@ -1,4 +1,4 @@
-package helper;
+/*package helper;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -55,9 +55,9 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    /**
+    /*
      * Storing user details in database
-     * */
+
     public void addUser(String uname, String upass, String uid) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -73,9 +73,9 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         Log.d(TAG, "New user inserted into sqlite: " + id);
     }
 
-    /**
-     * Getting user data from database
-     * */
+    /*
+     Getting user data from database
+     *
     public HashMap<String, String> getUserDetails() {
         HashMap<String, String> user = new HashMap<String, String>();
         String selectQuery = "SELECT  * FROM " + TABLE_USER;
@@ -99,7 +99,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
     /**
      * Re crate database Delete all tables and create them again
-     * */
+     *
     public void deleteUsers() {
         SQLiteDatabase db = this.getWritableDatabase();
         // Delete All Rows
@@ -109,4 +109,4 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         Log.d(TAG, "Deleted all user info from sqlite");
     }
 
-}
+}*/

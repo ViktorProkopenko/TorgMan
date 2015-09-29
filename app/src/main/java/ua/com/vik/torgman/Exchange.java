@@ -16,22 +16,15 @@ import com.android.volley.toolbox.StringRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import helper.SQLiteHandler;
+//import ua.com.vik.torgman.DataBase;
 import helper.SessionManager;
 
 public class Exchange extends Activity {
 
     private static final String TAG = Exchange.class.getSimpleName();
-    private Button btnExch;
-  //  private Button btnLinkToRegister;
-   // private EditText inputEmail;
-   // private EditText inputPassword;
     private ProgressDialog pDialog;
     private SessionManager session;
-    private SQLiteHandler db;
+    private DataBase db;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,7 +33,7 @@ public class Exchange extends Activity {
 
       //  inputEmail = (EditText) findViewById(R.id.email);
       //  inputPassword = (EditText) findViewById(R.id.password);
-        btnExch = (Button) findViewById(R.id.btnExch);
+        Button btnExch = (Button) findViewById(R.id.btnExch);
        // btnLinkToRegister = (Button) findViewById(R.id.btnLinkToRegisterScreen);
 
         // Progress dialog
@@ -48,7 +41,7 @@ public class Exchange extends Activity {
         pDialog.setCancelable(false);
 
         // SQLite database handler
-        db = new SQLiteHandler(getApplicationContext());
+     //   db = new DataBase(Context ctx);
 
         // Session manager
         session = new SessionManager(getApplicationContext());
@@ -63,9 +56,8 @@ public class Exchange extends Activity {
 
         // Login button Click Event
         btnExch.setOnClickListener(new View.OnClickListener() {
-
             public void onClick(View view) {
-                    checkLogin();
+                checkLogin();
             }
 
         });
@@ -86,7 +78,7 @@ public class Exchange extends Activity {
 
             @Override
             public void onResponse(String response) {
-                Log.d(TAG, "Login Response: " + response.toString());
+                Log.d(TAG, "Login Response: " + response);
                 hideDialog();
 
                 try {
@@ -100,14 +92,14 @@ public class Exchange extends Activity {
                         session.setLogin(true);
 
                         // Now store the user in SQLite
-                        String uid = jObj.getString("uid");
+                        //String uid = jObj.getString("uid");
 
                         JSONObject user = jObj.getJSONObject("user");
                         String uname = user.getString("uname");
                         String upass = user.getString("upass");
 
                         // Inserting row in users table
-                        db.addUser(uname, upass, uid);
+                        db.addRec(uname, upass);
 
                         // Launch main activity
                         Intent intent = new Intent(Exchange.this,
@@ -138,15 +130,15 @@ public class Exchange extends Activity {
             }
         }) {
 
-            @Override
+         /*   @Override
             protected Map<String, String> getParams() {
                 // Posting parameters to login url
                 Map<String, String> params = new HashMap<String, String>();
-            //    params.put("uname", uname);
-             //   params.put("upass", upass);
+                params.put("uname", uname);
+                params.put("upass", upass);
 
                 return params;
-            }
+            }*/
 
         };
 
